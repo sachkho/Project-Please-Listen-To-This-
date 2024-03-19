@@ -1,5 +1,11 @@
 ## User Interface requirements :  Priority 1
 
+### From homepage 
+Choose the user categorie either : 
+- public 
+- performer
+- maintainer
+
 ### POV public 
 The public will be able to : 
 - Log in
