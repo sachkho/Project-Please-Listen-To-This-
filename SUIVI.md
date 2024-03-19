@@ -23,7 +23,8 @@ TH2 : Recherche de pistes sur les technologies choisies et leur faisabilité
 
 20/03:\
 TH1 :\
-(Tania) : Debrieffing avec Rixwan ==> piste sur le reinforcement learning à approfondir
+(Tania) : Debrieffing avec Rixwan ==> piste sur le reinforcement learning à approfondir\
+(Noa + Sacha + Tania) : Dessin des premières fonctionnalités de l'application/site web 
 
 
 
