@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Test</title>
+</head>
+<body>
+
+  <script src='client.js'></script>
+
+  
+
+  <h1>WebSocket Test</h1>
+  <div>
+    Nom :
+    <input type="text" id="nameInput">
+    <button onclick="sendName()">Valider</button>
+  </div>
+  <div>
+    Channel :
+    <label>
+      <input type="radio" name="Channel" value="" checked="false" onchange="sendChannel(-1)"> Aucun
+    </label>
+    <label>
+      <input type="radio" name="Channel" value="public" onchange="sendChannel(0)"> Public
+    </label>
+    <label>
+      <input type="radio" name="Channel" value="channel 1" onchange="sendChannel(1)"> Channel 1
+    </label>
+    <label>
+      <input type="radio" name="Channel" value="channel 2" onchange="sendChannel(2)"> Channel 2
+    </label>    
+  </div>
+</body>
+</html>
