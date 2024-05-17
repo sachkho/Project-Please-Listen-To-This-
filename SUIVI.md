@@ -1,4 +1,4 @@
-14/02 :\
+- 14/02 :
 (Noa + Sacha + Tania) \
 Premier contact avec les encadrants et l'artiste; \
 Discussion sur le sujet du projet; \
