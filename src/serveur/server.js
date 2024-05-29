@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const fs = require('fs');
 
 const wss = new WebSocket.Server({ port: 8080 });
 const Clients = new  Set();
@@ -73,6 +74,18 @@ wss.on('connection', function connection(ws) {
                 console.log("audio received succefully from", client.name, client.id);
                 const receiver = message.receiver;
                 sendAudio(receiver, data);
+                break;
+            case 'READ_AUDIO':
+                const filePath = `audio/test.mp3`;
+                fs.readFile(filePath, (err, audio_data) => {
+                    
+                    if (err) {
+                        console.error('Error reading file:', err);
+                        return;
+                    }
+                    const message = {type: 'AUDIO', data: audio_data}
+                    ws.send(JSON.stringify(message));
+                });
                 break;
             default:
                 console.log("wrong message format")           

@@ -64,9 +64,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 });
 
-async function playAudio(blob) {
-  const audioURL = URL.createObjectURL(blob); // Création de l'URL objet à partir du Blob
+async function playAudio(audioData) {
   const audioPlayer = document.getElementById('audioPlayer');
-  audioPlayer.src = audioURL; // Définition de l'URL objet comme source de l'élément audio
-  audioPlayer.play(); // Lecture de l'audio
+  const audioBlob = new Blob([audioData], { type: 'audio/mp3' });
+  const audioURL = URL.createObjectURL(audioBlob);
+  console.log(audioURL);
+  console.log(audioBlob);
+  audioPlayer.src = audioURL;
+  audioPlayer.play();
 }
+
+async function playAudioFromServer(){
+  const message = {type:'READ_AUDIO'};
+  socket.send(JSON.stringify(message));
+}
+
