@@ -36,6 +36,8 @@ Point sur le projet avec les encadrants - discussion sur les approches liées à
 - 13/05:
 Point mi-période et discussion sur les prochains fonctionnalités ux du projet
 
+- 28/05: 
+Tania : Réunion avec Rizwan et Lauren pour démo de premier prototype du listening Machine avec MediaPipe
 
 
 
