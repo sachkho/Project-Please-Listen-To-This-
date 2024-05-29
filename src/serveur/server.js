@@ -1,20 +1,20 @@
 const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({ port: 8080 });
-const clients = []; //voir pour l'utilisation d'un map()
+const Clients = new  Set();
+const Admins = new Set();
 
 
 class Client {
-    constructor(id, name='', channel=-1){
+    constructor(id, name='', admin = false){
         this.id = id;
         this.name = name;
-        this.channel = channel;
+        this.admin = admin;
     }
 
     display(){
-        console.log("id : ", this.id);
         console.log("name :", this.name);
-        console.log("channel : ", this.channel);
+        console.log("id : ", this.id);
     }
 }
 
@@ -23,44 +23,69 @@ function generateUniqueId() {
     let id;
     do {
       id = Math.floor(Math.random() * 1000);
-    } while (clients.includes(id));
+    } while ([...Clients].some(client => client.id === id));
     return id;
 }
 
+function displayClients() {
+    Clients.forEach(client => {
+        if (client.admin){
+            console.log("admin");
+            client.display();
+        } else {
+            client.display();
+        }
+    });
+}
 
 
+//Partie socket
 wss.on('connection', function connection(ws) {
-    const clientId = generateUniqueId();
-    const client = new Client(clientId);
-    console.log('Nouvelle connexion WebSocket. Id : ', clientId);
-    clients.push(clientId);
 
-    console.log(clients);
+    const client = new Client(generateUniqueId());
+    Clients.add(client);
+
+
+    console.log('\nNouvelle connexion WebSocket. Id : ', client.id);
+
+    displayClients();
 
     ws.on('message', function incoming(raw_message) {
         message = JSON.parse(raw_message);
+        console.log('\nReçu : %s', message, 'from', client.id, '\n');
+
         const type = message.type;
         const data = message.data;
-        console.log('Reçu : %s', message);
-
+        
         switch(type){
             case 'NAME':
                 client.name = data;
+                sendToAdmin();
                 break;
-            case 'CHANNEL':
-                client.channel = data;
+            case 'ADMIN' : 
+                client.name = "admin";
+                client.admin = true;
+                Admins.add(ws);
+                break;
+            case 'REFRESH' : 
+                sendToAdmin();
+                break;
+            case 'AUDIO' :
+                console.log("audio received succefully from", client.id);
+                // a faire
                 break;
             default:
                 console.log("wrong message format")           
         }
 
-        client.display();
+        
+        displayClients();
     })
 
     ws.on('close', function (code, reason) {
-        console.log('Connexion WebSocket fermée. Id : ', clientId);
-        const index = clients.indexOf(clientId);
-        clients.splice(index);
+        console.log('Connexion WebSocket fermée. Id : ', client.id, '\n');
+        Clients.delete(client);
+        displayClients();
     });
 
     ws.on('error', function (error) {
@@ -69,4 +94,15 @@ wss.on('connection', function connection(ws) {
 
 })
 
-// A faire : map des clients et map des channels
+function sendToAdmin() {
+    const message = {type : 'CLIENT_LIST', data : Array.from(Clients).map(client => client.name)}; // #enlever les admin
+    Admins.forEach(ws => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify(message));
+        }
+    });
+}
+
+
+
+

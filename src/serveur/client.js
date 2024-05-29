@@ -1,3 +1,4 @@
+//Partie socket
 const socket = new WebSocket('ws://localhost:8080');
 
 socket.onopen = function() {
@@ -18,14 +19,17 @@ socket.onclose = function() {
 };
 
 
-function sendName() {
-  const name = document.getElementById('nameInput').value;
-  const message = {"type" : "NAME", "data" : name};
+async function sendName() {
+  const name = document.getElementById('nameInput');
+  const message = {type: 'NAME', data: name.value};
   socket.send(JSON.stringify(message));
-  document.getElementById('nameInput').value = ''; // Efface le champ d'entrée après l'envoi
+  name.value = ''; // Efface le champ d'entrée après l'envoi
+  name.disabled = true;
 }
 
-function sendChannel(channel_number) {
-  const message = {"type" : "CHANNEL", "data" : channel_number};
-  socket.send(JSON.stringify(message));
+
+
+
+//partie graphique
+function disableButton() {
 }
