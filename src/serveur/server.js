@@ -6,7 +6,8 @@ const Admins = new Set();
 
 
 class Client {
-    constructor(id, name='', admin = false){
+    constructor(ws, id, name='', admin = false){
+        this.ws = ws;
         this.id = id;
         this.name = name;
         this.admin = admin;
@@ -42,13 +43,11 @@ function displayClients() {
 //Partie socket
 wss.on('connection', function connection(ws) {
 
-    const client = new Client(generateUniqueId());
+    const client = new Client(ws, generateUniqueId());
     Clients.add(client);
 
 
     console.log('\nNouvelle connexion WebSocket. Id : ', client.id);
-
-    displayClients();
 
     ws.on('message', function incoming(raw_message) {
         message = JSON.parse(raw_message);
@@ -71,8 +70,9 @@ wss.on('connection', function connection(ws) {
                 sendToAdmin();
                 break;
             case 'AUDIO' :
-                console.log("audio received succefully from", client.id);
-                // a faire
+                console.log("audio received succefully from", client.name, client.id);
+                const receiver = message.receiver;
+                sendAudio(receiver, data);
                 break;
             default:
                 console.log("wrong message format")           
@@ -96,13 +96,21 @@ wss.on('connection', function connection(ws) {
 
 function sendToAdmin() {
     const message = {type : 'CLIENT_LIST', data : Array.from(Clients).map(client => client.name)}; // #enlever les admin
-    Admins.forEach(ws => {
-        if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify(message));
+    Admins.forEach(admin => {
+        if (admin.readyState === WebSocket.OPEN) {
+            admin.send(JSON.stringify(message));
         }
     });
 }
 
-
+function sendAudio(receiver, audio){
+    const message = {type: 'AUDIO', data: audio};
+    Clients.forEach(client => {
+        if (client.name == receiver){
+            client.ws.send(JSON.stringify(message));
+            return;
+        }
+    });
+}
 
 

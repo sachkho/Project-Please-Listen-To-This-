@@ -100,13 +100,15 @@ function stopAudioCapture() {
 }
 
 function sendAudio() {
-  if (recordedChunks.lenght == 0) {
+  if (recordedChunks.length === 0) {
     console.log("no audio recorded");
     return;
   }
 
   const audioBlob = new Blob(recordedChunks, { type: 'audio/webm' })
-  const message = {'type': 'AUDIO', 'data': audioBlob};
+  const message = {type: 'AUDIO', data: audioBlob, receiver: 'noa'};
+  console.log(message.data);
   socket.send(JSON.stringify(message));
+  console.log("audio sent");
 
 }
