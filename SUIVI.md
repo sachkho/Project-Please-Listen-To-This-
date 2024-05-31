@@ -39,10 +39,11 @@ Point mi-période et discussion sur les prochains fonctionnalités ux du projet
 - 28/05:\ 
 Tania : Réunion avec Rizwan et Lauren pour démo de premier prototype du listening Machine avec MediaPipe
 
-
 - 29/05:\ 
 Audit général mi-parcours
 
 - 31:05:\
-Réunion de présentation de premier prototype test 
+Réunion de présentation de premier prototype test\
+Discussion sur les prochains échanges externes liés au projet.\
+Rendu du rapport sur les impacts sociaux/environnementaux/légaux/artistique du projet
 
