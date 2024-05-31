@@ -73,18 +73,19 @@ wss.on('connection', function connection(ws) {
             case 'AUDIO' :
                 console.log("audio received succefully from", client.name, client.id);
                 const receiver = message.receiver;
-                sendAudio(receiver, data);
+                //sendAudio(receiver, data);
+                startStream(data);
                 break;
             case 'READ_AUDIO':
                 const filePath = `audio/test.mp3`;
-                fs.readFile(filePath, (err, audio_data) => {
-                    
-                    if (err) {
-                        console.error('Error reading file:', err);
-                        return;
+                const stream = fs.createReadStream(filePath, { highWaterMark: 65536 });
+                stream.on('data', (chunk) => {
+                    if (ws.readyState === WebSocket.OPEN) {
+                        ws.send(chunk);
                     }
-                    const message = {type: 'AUDIO', data: audio_data}
-                    ws.send(JSON.stringify(message));
+                });
+                stream.on('end', () => {
+                    ws.send(JSON.stringify({ end: true }));
                 });
                 break;
             default:
@@ -126,4 +127,12 @@ function sendAudio(receiver, audio){
     });
 }
 
+function startStream(audio, ws){
+    const stream = fs.createReadStream(path.join(__dirname, 'audio/test.mp3'), { highWaterMark: 65536 });
+    stream.on('data', (chunk) => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(chunk);
+        }
+    });
 
+}

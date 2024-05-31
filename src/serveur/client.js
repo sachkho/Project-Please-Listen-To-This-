@@ -1,25 +1,12 @@
 //Partie socket
 const socket = new WebSocket('ws://localhost:8080');
 
+
+
 socket.onopen = function() {
   console.log('Connexion établie.');
 };
 
-socket.onmessage = function(event) {
-  const message = JSON.parse(event.data)
-  console.log('\nReçu : %s', message, '\n');
-
-  const type = message.type;
-  const data = message.data;
-  switch(type){
-    case 'AUDIO' :
-      console.log(data);
-      playAudio(data);
-      break;
-    default :
-      console.log("Wrong message format");
-  }
-};
 
 socket.onerror = function(error) {
   console.error('Erreur WebSocket : ', error);
@@ -45,37 +32,36 @@ async function sendName() {
 
 
 //partie audio
+  let audioChunks = [];
 
-/*
-const audioPlayer = document.getElementById('audioPlayer');
-const audioLibrary = document.getElementById('audioLibrary');
-*/
+  socket.binaryType = 'arraybuffer';
 
-document.addEventListener('DOMContentLoaded', (event) => {
+  socket.onmessage = (event) => {
+      if (typeof event.data === 'string') {
+          const message = JSON.parse(event.data);
+          if (message.end) {
+              const blob = new Blob(audioChunks, { type: 'audio/mpeg' });
+              const url = URL.createObjectURL(blob);
 
-  document.getElementById('audioFileInput').addEventListener('change', function(event) {
-    const audioFile = event.target.files[0];
-    if (audioFile) {
-        const audioURL = URL.createObjectURL(audioFile);
-        const audioPlayer = document.getElementById('audioPlayer');
-        audioPlayer.src = audioURL;
-        audioPlayer.play();
-    }
-  });
-});
+              const sound = new Howl({
+                  src: [url],
+                  format: ['mp3'],
+                  autoplay: true,
+                  onend: function() {
+                      console.log('Finished playing audio.');
+                  }
+              });
 
-async function playAudio(audioData) {
-  const audioPlayer = document.getElementById('audioPlayer');
-  const audioBlob = new Blob([audioData], { type: 'audio/mp3' });
-  const audioURL = URL.createObjectURL(audioBlob);
-  console.log(audioURL);
-  console.log(audioBlob);
-  audioPlayer.src = audioURL;
-  audioPlayer.play();
-}
+              // Clean up the URL object after the audio is loaded
+              sound.on('load', () => {
+                  URL.revokeObjectURL(url);
+              });
+          }
+      } else {
+          audioChunks.push(event.data);
+      }
+  };
+ 
 
-async function playAudioFromServer(){
-  const message = {type:'READ_AUDIO'};
-  socket.send(JSON.stringify(message));
-}
 
+  
