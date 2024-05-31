@@ -99,6 +99,8 @@ function stopAudioCapture() {
   }
 }
 
+
+// a refaire
 function sendAudio() {
   if (recordedChunks.length === 0) {
     console.log("no audio recorded");
@@ -110,5 +112,12 @@ function sendAudio() {
   console.log(message.data);
   socket.send(JSON.stringify(message));
   console.log("audio sent");
+}
 
+
+
+function playAudio(name){
+    const message = {type: 'PLAY_AUDIO', receiver: name}
+    socket.send(JSON.stringify(message));
+    console.log("play audio to ", name);
 }

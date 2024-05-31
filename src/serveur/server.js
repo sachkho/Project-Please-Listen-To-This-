@@ -72,11 +72,10 @@ wss.on('connection', function connection(ws) {
                 break;
             case 'AUDIO' :
                 console.log("audio received succefully from", client.name, client.id);
-                const receiver = message.receiver;
                 //sendAudio(receiver, data);
                 startStream(data);
                 break;
-            case 'READ_AUDIO':
+            case 'REQUEST_AUDIO':
                 const filePath = `audio/test.mp3`;
                 const stream = fs.createReadStream(filePath, { highWaterMark: 65536 });
                 stream.on('data', (chunk) => {
@@ -87,6 +86,10 @@ wss.on('connection', function connection(ws) {
                 stream.on('end', () => {
                     ws.send(JSON.stringify({ end: true }));
                 });
+                break;
+            case 'PLAY_AUDIO':
+                const receiver = message.receiver;
+                sendAudio(receiver);
                 break;
             default:
                 console.log("wrong message format")           
@@ -117,13 +120,24 @@ function sendToAdmin() {
     });
 }
 
-function sendAudio(receiver, audio){
-    const message = {type: 'AUDIO', data: audio};
+function sendAudio(receiver){
+    let ws;
     Clients.forEach(client => {
         if (client.name == receiver){
-            client.ws.send(JSON.stringify(message));
+            ws = client.ws;
             return;
         }
+    });
+    
+    const filePath = `audio/test.mp3`;
+    const stream = fs.createReadStream(filePath, { highWaterMark: 65536 });
+    stream.on('data', (chunk) => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(chunk);
+        }
+    });
+    stream.on('end', () => {
+        ws.send(JSON.stringify({ end: true }));
     });
 }
 
