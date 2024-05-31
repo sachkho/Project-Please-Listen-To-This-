@@ -54,6 +54,9 @@ function displayClients() {
     Clients.forEach(client => {
         const li = document.createElement('li');
         li.textContent = client;
+        li.addEventListener('click', () => {
+            playAudio(client);
+        });
         ul.appendChild(li);
     });
 

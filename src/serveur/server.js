@@ -60,7 +60,7 @@ wss.on('connection', function connection(ws) {
         switch(type){
             case 'NAME':
                 client.name = data;
-                sendToAdmin();
+                sendClientsToAdmin();
                 break;
             case 'ADMIN' : 
                 client.name = "admin";
@@ -68,7 +68,7 @@ wss.on('connection', function connection(ws) {
                 Admins.add(ws);
                 break;
             case 'REFRESH' : 
-                sendToAdmin();
+                sendClientsToAdmin();
                 break;
             case 'AUDIO' :
                 console.log("audio received succefully from", client.name, client.id);
@@ -111,8 +111,14 @@ wss.on('connection', function connection(ws) {
 
 })
 
-function sendToAdmin() {
-    const message = {type : 'CLIENT_LIST', data : Array.from(Clients).map(client => client.name)}; // #enlever les admin
+function sendClientsToAdmin() {
+    const client_list = [];
+    Clients.forEach(client =>{
+        if(!client.admin){
+            client_list.push(client.name);
+        }
+    })
+    const message = {type : 'CLIENT_LIST', data : client_list};
     Admins.forEach(admin => {
         if (admin.readyState === WebSocket.OPEN) {
             admin.send(JSON.stringify(message));

@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>WebSocket Test</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
 </head>
 <body>
@@ -18,16 +17,14 @@
     <button onclick="sendName()">Valider</button>
   </div>
 
-  <h2>Audio Library</h2>
-  <input type="file" id="audioFileInput" accept="audio/*">
-  <audio id="audioPlayer" controls></audio>
+  <h2>Audio</h2>
 
-  <div>
-    Play audio from server
-    <button onclick="requestAudioFromServer()">|></button>
-  </div>
+  <button onclick="playAudio()">Play</button>
+  <button onclick="pauseAudio()">Pause</button>
+  <button onclick="stopAudio()">Stop</button>
 
   <script src='client.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
 
 </body>

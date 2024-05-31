@@ -35,36 +35,45 @@ function requestAudioFromServer(){
 
 
 //partie audio
-  let audioChunks = [];
+let audioChunks = [];
+let sound;
 
-  socket.binaryType = 'arraybuffer';
+socket.binaryType = 'arraybuffer';
 
-  socket.onmessage = (event) => {
-      if (typeof event.data === 'string') {
-          const message = JSON.parse(event.data);
-          if (message.end) {
-              const blob = new Blob(audioChunks, { type: 'audio/mpeg' });
-              const url = URL.createObjectURL(blob);
+socket.onmessage = (event) => {
+  if (typeof event.data === 'string') {
+      const message = JSON.parse(event.data);
+      if (message.end) {
+          const blob = new Blob(audioChunks, { type: 'audio/mpeg' });
+          const url = URL.createObjectURL(blob);
 
-              const sound = new Howl({
-                  src: [url],
-                  format: ['mp3'],
-                  autoplay: true,
-                  onend: function() {
-                      console.log('Finished playing audio.');
-                  }
-              });
+          sound = new Howl({
+            src: [url],
+            format: ['mp3'],
+            autoplay: true,
+          });
 
-              // Clean up the URL object after the audio is loaded
-              sound.on('load', () => {
-                  URL.revokeObjectURL(url);
-              });
-          }
-      } else {
-          audioChunks.push(event.data);
+          // Clean up the URL object after the audio is loaded
+          sound.on('load', () => {
+              URL.revokeObjectURL(url);
+          });
       }
-  };
- 
+  } else {
+      audioChunks.push(event.data);
+  }
+};
+
+
+function playAudio() {
+  sound.play();
+}
+function pauseAudio() {
+  sound.pause();
+}
+function stopAudio() {
+  sound.stop();
+}
+
 
 
   
