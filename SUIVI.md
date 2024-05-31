@@ -30,12 +30,19 @@ TH2 :\
 (Sacha) : interface utilisateur - web \
 (Tania) : test de modèles existants de Deep reinforcement Learning/ML ==> pour le choix de modèle à utiliser
 
-- 02/04:
+- 02/04:\
 Point sur le projet avec les encadrants - discussion sur les approches liées à la technologie de diffusion à utiliser pour avoir le maximum de couverture sans forcément recourir à internet
 
-- 13/05:
+- 13/05:\
 Point mi-période et discussion sur les prochains fonctionnalités ux du projet
 
+- 28/05:\ 
+Tania : Réunion avec Rizwan et Lauren pour démo de premier prototype du listening Machine avec MediaPipe
 
 
+- 29/05:\ 
+Audit général mi-parcours
+
+- 31:05:\
+Réunion de présentation de premier prototype test 
 

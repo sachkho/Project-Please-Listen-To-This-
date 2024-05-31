@@ -1,0 +1,61 @@
+#main-title{
+    text-align: center;
+    font-size: 3em;
+    font-family: 'Chakra Petch';
+    background: linear-gradient(to right, rgb(164, 95, 255), rgb(119, 0, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#Name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Chakra Petch';
+}
+
+#Name > * {
+    margin: 10px 0; /* Ajoute une marge de 10px en haut et en bas de chaque élément enfant de #Name */
+}
+
+#nameInput {
+    font-family: 'Chakra Petch';
+    border-radius: 20px;
+}
+
+#bouton-valider {
+    position: relative;
+    width: 10%;
+    margin: 10px 0;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    background: rgb(111, 0, 255);
+    overflow: hidden;
+  }
+  
+  #bouton-valider:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgb(119, 0, 255), white);
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 1;
+  }
+  
+  .button-text {
+    position: relative;
+    color: white;
+    z-index: 2;
+  }
+  
+  #bouton-valider:hover:before {
+    opacity: 1;
+  }
