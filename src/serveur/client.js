@@ -27,7 +27,10 @@ async function sendName() {
 }
 
 
-
+function requestAudioFromServer(){
+  const message = {type: 'REQUEST_AUDIO'};
+  socket.send(JSON.stringify(message));
+}
 
 
 
