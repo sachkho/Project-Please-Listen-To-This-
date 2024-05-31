@@ -70,7 +70,7 @@ wss.on('connection', function connection(ws) {
             case 'REFRESH' : 
                 sendClientsToAdmin();
                 break;
-            case 'AUDIO' :
+            case 'AUDIO' : //work in progress
                 console.log("audio received succefully from", client.name, client.id);
                 //sendAudio(receiver, data);
                 startStream(data);
@@ -87,10 +87,11 @@ wss.on('connection', function connection(ws) {
                     ws.send(JSON.stringify({ end: true }));
                 });
                 break;
-            case 'PLAY_AUDIO':
-                const receiver = message.receiver;
-                sendAudio(receiver);
+            case 'SEND_AUDIO':
+                sendAudio(message.receiver);
                 break;
+            case 'AUDIO_CONTROL':
+                sendAudioControl(message.control);
             default:
                 console.log("wrong message format")           
         }
@@ -128,6 +129,7 @@ function sendClientsToAdmin() {
 
 function sendAudio(receiver){
     let ws;
+
     Clients.forEach(client => {
         if (client.name == receiver){
             ws = client.ws;
@@ -143,9 +145,22 @@ function sendAudio(receiver){
         }
     });
     stream.on('end', () => {
-        ws.send(JSON.stringify({ end: true }));
+        ws.send(JSON.stringify({ type: 'AUDIO', end: true }));
     });
 }
+
+function sendAudioControl(control){
+    let ws;
+    const message = {type: 'AUDIO_CONTROL', control: control};
+    Clients.forEach(client => {
+        if (client.name == receiver){
+            ws = client.ws;
+            ws.send(JSON.stringify(message));
+        }
+    })
+}
+
+
 
 function startStream(audio, ws){
     const stream = fs.createReadStream(path.join(__dirname, 'audio/test.mp3'), { highWaterMark: 65536 });

@@ -43,25 +43,53 @@ socket.binaryType = 'arraybuffer';
 socket.onmessage = (event) => {
   if (typeof event.data === 'string') {
       const message = JSON.parse(event.data);
-      if (message.end) {
-          const blob = new Blob(audioChunks, { type: 'audio/mpeg' });
-          const url = URL.createObjectURL(blob);
-
-          sound = new Howl({
-            src: [url],
-            format: ['mp3'],
-            autoplay: true,
-          });
-
-          // Clean up the URL object after the audio is loaded
-          sound.on('load', () => {
-              URL.revokeObjectURL(url);
-          });
+      console.log(message.type);
+      switch(message.type){
+        case 'AUDIO_CONTROL':
+          switch(message.control){
+            case 'play':
+              playAudio();
+              break;
+            case 'pause':
+              pauseAudio();
+              break;
+            case 'stop':
+              stopAudio();
+              break;
+            default:
+              console.log("wrong control fromat");
+          }
+          break;
+        case 'AUDIO':
+          if (message.end) {
+              readAudio(audioChunks);
+          }
+          break;
+        default:
+          console.log("wrong type format")
       }
   } else {
       audioChunks.push(event.data);
   }
 };
+
+
+function readAudio(audiochunks){
+  const blob = new Blob(audioChunks, { type: 'audio/mpeg' });
+  const url = URL.createObjectURL(blob);
+
+  sound = new Howl({
+    src: [url],
+    format: ['mp3'],
+    autoplay: true,
+  });
+
+  // Clean up the URL object after the audio is loaded
+  sound.on('load', () => {
+      URL.revokeObjectURL(url);
+  });
+}
+
 
 
 function playAudio() {

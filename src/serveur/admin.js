@@ -55,7 +55,7 @@ function displayClients() {
         const li = document.createElement('li');
         li.textContent = client;
         li.addEventListener('click', () => {
-            playAudio(client);
+            sendAudio(client);
         });
         ul.appendChild(li);
     });
@@ -64,15 +64,37 @@ function displayClients() {
     
 }
 
-// Appeler displayClients pour afficher la liste initiale
-/*
-document.addEventListener('DOMContentLoaded', (event) => {
-    refresh();
-});
-*/
+
 
 
 // Partie audio
+
+function sendAudio(name){
+    const message = {type: 'SEND_AUDIO', receiver: name}
+    socket.send(JSON.stringify(message));
+    console.log("play audio to ", name);
+}
+//implementer la selection et upload des fichiers
+
+
+
+function playAudio(){
+    const message = {type:'AUDIO_CONTROL', control: 'play'}
+    socket.send(JSON.stringify(message));
+}
+function pauseAudio(){
+    const message = {type:'AUDIO_CONTROL', control: 'pause'}
+    socket.send(JSON.stringify(message));
+}
+function stopAudio(){
+    const message = {type:'AUDIO_CONTROL', control: 'stop'}
+    socket.send(JSON.stringify(message));
+}
+
+
+
+
+//work in progress
 let mediaRecorder;
 let recordedChunks = [];
 
@@ -100,27 +122,4 @@ function stopAudioCapture() {
       console.log('Recording stopped');
       sendAudio();
   }
-}
-
-
-// a refaire
-function sendAudio() {
-  if (recordedChunks.length === 0) {
-    console.log("no audio recorded");
-    return;
-  }
-
-  const audioBlob = new Blob(recordedChunks, { type: 'audio/webm' })
-  const message = {type: 'AUDIO', data: audioBlob, receiver: 'noa'};
-  console.log(message.data);
-  socket.send(JSON.stringify(message));
-  console.log("audio sent");
-}
-
-
-
-function playAudio(name){
-    const message = {type: 'PLAY_AUDIO', receiver: name}
-    socket.send(JSON.stringify(message));
-    console.log("play audio to ", name);
 }
