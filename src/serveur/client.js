@@ -81,7 +81,7 @@ function readAudio(audiochunks){
   sound = new Howl({
     src: [url],
     format: ['mp3'],
-    autoplay: true,
+    autoplay: false,
   });
 
   // Clean up the URL object after the audio is loaded
