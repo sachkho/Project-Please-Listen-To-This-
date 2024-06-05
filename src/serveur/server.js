@@ -1,3 +1,77 @@
+<<<<<<< HEAD
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({ port: 8080 });
+const clients = []; //voir pour l'utilisation d'un map()
+
+
+class Client {
+    constructor(id, name='', channel=-1){
+        this.id = id;
+        this.name = name;
+        this.channel = channel;
+    }
+
+    display(){
+        console.log("id : ", this.id);
+        console.log("name :", this.name);
+        console.log("channel : ", this.channel);
+    }
+}
+
+
+function generateUniqueId() {
+    let id;
+    do {
+      id = Math.floor(Math.random() * 1000);
+    } while (clients.includes(id));
+    return id;
+}
+
+
+
+wss.on('connection', function connection(ws) {
+    const clientId = generateUniqueId();
+    const client = new Client(clientId);
+    console.log('Nouvelle connexion WebSocket. Id : ', clientId);
+    clients.push(clientId);
+
+    console.log(clients);
+
+    ws.on('message', function incoming(raw_message) {
+        message = JSON.parse(raw_message);
+        const type = message.type;
+        const data = message.data;
+        console.log('Reçu : %s', message);
+
+        switch(type){
+            case 'NAME':
+                client.name = data;
+                break;
+            case 'CHANNEL':
+                client.channel = data;
+                break;
+            default:
+                console.log("wrong message format")           
+        }
+
+        client.display();
+    })
+
+    ws.on('close', function (code, reason) {
+        console.log('Connexion WebSocket fermée. Id : ', clientId);
+        const index = clients.indexOf(clientId);
+        clients.splice(index);
+    });
+
+    ws.on('error', function (error) {
+        console.error('Erreur de connexion WebSocket :', error);
+    });
+
+})
+
+// A faire : map des clients et map des channels
+=======
 const WebSocket = require('ws');
 const fs = require('fs');
 
@@ -70,7 +144,7 @@ wss.on('connection', function connection(ws) {
             case 'REFRESH' : 
                 sendClientsToAdmin();
                 break;
-            case 'AUDIO' :
+            case 'AUDIO' : //work in progress
                 console.log("audio received succefully from", client.name, client.id);
                 //sendAudio(receiver, data);
                 startStream(data);
@@ -87,10 +161,11 @@ wss.on('connection', function connection(ws) {
                     ws.send(JSON.stringify({ end: true }));
                 });
                 break;
-            case 'PLAY_AUDIO':
-                const receiver = message.receiver;
-                sendAudio(receiver);
+            case 'SEND_AUDIO':
+                sendAudio(message.receiver);
                 break;
+            case 'AUDIO_CONTROL':
+                sendAudioControl(message.control);
             default:
                 console.log("wrong message format")           
         }
@@ -128,6 +203,7 @@ function sendClientsToAdmin() {
 
 function sendAudio(receiver){
     let ws;
+
     Clients.forEach(client => {
         if (client.name == receiver){
             ws = client.ws;
@@ -143,9 +219,22 @@ function sendAudio(receiver){
         }
     });
     stream.on('end', () => {
-        ws.send(JSON.stringify({ end: true }));
+        ws.send(JSON.stringify({ type: 'AUDIO', end: true }));
     });
 }
+
+function sendAudioControl(control){
+    let ws;
+    const message = {type: 'AUDIO_CONTROL', control: control};
+    Clients.forEach(client => {
+        if (client.name == receiver){
+            ws = client.ws;
+            ws.send(JSON.stringify(message));
+        }
+    })
+}
+
+
 
 function startStream(audio, ws){
     const stream = fs.createReadStream(path.join(__dirname, 'audio/test.mp3'), { highWaterMark: 65536 });
@@ -156,3 +245,4 @@ function startStream(audio, ws){
     });
 
 }
+>>>>>>> 0790880475f27199ce4320e56153595aa60567ff
