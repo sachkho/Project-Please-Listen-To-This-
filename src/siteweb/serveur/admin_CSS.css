@@ -16,6 +16,6 @@
     font-size : 1.5em;
 }
 
-#clients_list div:hover {
+#clients_list :hover {
     color: #ff0000; /* Change la couleur du texte en rouge lorsque la souris passe dessus */
 }
