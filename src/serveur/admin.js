@@ -69,11 +69,7 @@ function displayClients() {
 
 // Partie audio
 
-function sendAudio(name){
-    const message = {type: 'SEND_AUDIO', receiver: name}
-    socket.send(JSON.stringify(message));
-    console.log("play audio to ", name);
-}
+
 //implementer la selection et upload des fichiers
 
 
@@ -90,6 +86,15 @@ function stopAudio(){
     const message = {type:'AUDIO_CONTROL', control: 'stop'}
     socket.send(JSON.stringify(message));
 }
+
+function sendAudio(){
+    
+}
+
+
+
+
+
 
 
 
@@ -123,3 +128,4 @@ function stopAudioCapture() {
       sendAudio();
   }
 }
+
