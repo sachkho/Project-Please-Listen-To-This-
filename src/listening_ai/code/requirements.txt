@@ -1,0 +1,8 @@
+media==0.1.6
+mediapipe==0.10.14
+numpy==2.0.0
+PyAudio==0.2.14
+scipy==1.13.1
+sounddevice==0.4.7
+tensorflow==2.16.1
+tensorflow_hub==0.16.1
