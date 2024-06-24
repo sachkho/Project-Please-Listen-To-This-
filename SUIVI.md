@@ -50,6 +50,9 @@ Rendu du rapport sur les impacts sociaux/environnementaux/légaux/artistique du 
 - 12/06 :\
 Réunion avant sprint
 
+- 20/06 :\
+Rendu poster pour forum des projets
+
 - 24/06:\
 Tania : fix classifier, Configuration microphone & requirements.txt + première approche sur l'intégration de l'ia sur l'interface
 
