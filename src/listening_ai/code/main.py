@@ -10,14 +10,12 @@ from mediapipe.tasks.python import audio
 base_options = python.BaseOptions(model_asset_path='src/listening_ai/resources/classifier.tflite')
 options = audio.AudioClassifierOptions(base_options = base_options)
 
-if __name__ == "__main__":
+def launchListeningMachine():
     input_device_id = 4  # Vous pouvez ajuster l'index de l'appareil d'entrée ici
     audio_stream = AudioStream(chunk_size=1024, buffer_duration=10, input_device_index=input_device_id)
     audio_stream.start_stream()
 
     segment_duration_ms = 1000  # Vous pouvez ajuster la longueur des segments ici
-    total_duration_ms = 40 * 60 * 1000  # Vous pouvez ajuster la durée totale ici
-    start_time_ms = int(time.time() * 1000) # Démarrer le temps en millisecondes
 
     with audio.AudioClassifier.create_from_options(options) as classifier:
         try:
@@ -26,10 +24,6 @@ if __name__ == "__main__":
                 # Capture et classification de l'audio
                 audio_stream.fill_buffer()
                 classification_result_list = classify_audio(audio_stream.audio_buffer, audio_stream.rate, classifier)
-
-                # # Génération des timestamps pour chaque segment
-                # iter = [i * 2000 for i in range(5)]  # Vous pouvez ajuster la longueur des segments ici
-                
 
                 # Prise de décision basée sur la classification
                 output_class(classification_result_list, segment_duration_ms, elapsed_time_ms)
@@ -44,3 +38,7 @@ if __name__ == "__main__":
             audio_stream.stop_stream()
 
     
+
+
+if __name__ == "__main__":
+    launchListeningMachine()

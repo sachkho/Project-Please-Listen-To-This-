@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appel de Script Python</title>
+    <script>
+        function runPythonScript() {
+            fetch('../main.py', {
+                method: 'POST'
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log('Résultat du script Python:', result);
+                alert('Le script Python a été exécuté avec succès !');
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'appel du script Python:', error);
+                alert('Erreur lors de l\'appel du script Python. Veuillez consulter la console pour plus de détails.');
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Appel de Script Python</h1>
+    <p>Cliquez sur le bouton ci-dessous pour exécuter le script Python via Node.js :</p>
+    <button onclick="runPythonScript()">Exécuter le Script Python</button>
+</body>
+</html>
