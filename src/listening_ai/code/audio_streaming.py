@@ -4,7 +4,7 @@ import tensorflow as tf
 import mediapipe as mp
 
 class AudioStream:
-    def __init__(self, chunk_size=1024, rate=44100, channels=1, buffer_duration=5):
+    def __init__(self, chunk_size=1024, rate=44100, channels=1, buffer_duration=5, input_device_index=None):
         self.chunk_size = chunk_size
         self.rate = rate
         self.channels = channels
@@ -14,13 +14,15 @@ class AudioStream:
         self.buffer_duration = buffer_duration
         self.buffer_size = int(rate / chunk_size * buffer_duration)
         self.audio_buffer = []
+        self.input_device_index = input_device_index
 
     def start_stream(self):
         self.stream = self.p.open(format=self.format,
                                   channels=self.channels,
                                   rate=self.rate,
                                   input=True,
-                                  frames_per_buffer=self.chunk_size)
+                                  frames_per_buffer=self.chunk_size,
+                                  input_device_index=self.input_device_index)
 
     def read_chunk(self):
         data = self.stream.read(self.chunk_size)
