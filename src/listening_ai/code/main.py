@@ -7,7 +7,7 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import audio
 
 # Customize and associate model for Classifier
-base_options = python.BaseOptions(model_asset_path='src/listening_ai/resources/classifier.tflite')
+base_options = python.BaseOptions(model_asset_path='../resources/classifier.tflite')
 options = audio.AudioClassifierOptions(base_options = base_options)
 
 if __name__ == "__main__":
