@@ -9,7 +9,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import media as mp
+import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import audio
 import numpy as np
@@ -18,7 +18,7 @@ import numpy as np
 import sounddevice as sd
 import time
 
-model_path = 'src/listening_ai/resources/classifier.tflite'
+model_path = '../resources/classifier.tflite'
 base_options = python.BaseOptions(model_asset_path=model_path)
 sample_rate = 44100
 duration = 5

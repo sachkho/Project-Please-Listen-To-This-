@@ -7,3 +7,4 @@ sounddevice
 tensorflow
 tensorflow_hub
 tensorrt
+pydub
