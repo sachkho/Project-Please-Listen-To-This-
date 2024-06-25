@@ -1,9 +1,6 @@
 const WebSocket = require('ws');
 const fs = require('fs');
 
-// Tania : MODIF
-const { spawn } = require('child_process');
-// MODIF END
 const wss = new WebSocket.Server({ port: 8080 });
 const Clients = new  Set();
 const Admins = new Set();
@@ -94,59 +91,6 @@ wss.on('connection', function connection(ws) {
                 const receiver = message.receiver;
                 sendAudio(receiver);
                 break;
-         
-// Tania : MODIF START HERE                
-            case 'GET_DEVICE':
-                    const pythonProcess = spawn('python3', ['src/listening_ai/code/py_solutions/config_device.py']);
-                    
-                    pythonProcess.stdout.on('data', (data) => {
-                        try {
-                            const result = JSON.parse(data.toString());
-                            if (result && result.type === 'DEVICE_LIST') {
-                                ws.send(JSON.stringify(result)); // Envoyer le résultat directement sans encapsulation
-                            } else {
-                                console.error("Unexpected data format:", result);
-                            }
-                        } catch (error) {
-                            console.error("Error parsing JSON:", error);
-                        }
-                    });
-    
-                    pythonProcess.stderr.on('data', (data) => {
-                    console.error(`stderr: ${data}`);
-                    });
-    
-                    pythonProcess.on('close', (code) => {
-                    console.log(`child process exited with code ${code}`);
-                    });
-                    break; 
-            case 'RUN_SCRIPT' : 
-                    const pythonProcess2 = spawn('python3', ['../listening_ai/code/py_solutions/main.py']);
-                    
-                    // Send main.py args
-                    const scriptArgs = {
-                    input_device_id : data.input_device_id,
-                    stream_mode : data.stream_mode,
-                    file : data.file 
-                    }
-    
-                    pythonProcess2.stdin.write(JSON.stringify(scriptArgs));
-                    pythonProcess2.stdin.end();
-    
-                    pythonProcess2.stdout.on('data', (data) => {
-                    const result = JSON.parse(data.toString());
-                    ws.send(JSON.stringify({ type: 'OUTPUT_CLASS', data: result }));
-                    });
-            
-                    pythonProcess2.stderr.on('data', (data) => {
-                    console.error(`stderr: ${data}`);
-                    });
-            
-                    pythonProcess2.on('close', (code) => {
-                    console.log(`child process exited with code ${code}`);
-                    });
-                    break;
-// MODIF END HERE
             default:
                 console.log("wrong message format")           
         }
