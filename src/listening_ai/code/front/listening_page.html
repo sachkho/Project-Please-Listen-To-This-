@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Appel de Script Python</title>
-    <script>
-        function runPythonScript() {
-            fetch('../py_solutions/main.py', {
-                method: 'POST'
-            })
-            .then(response => response.text())
-            .then(result => {
-                console.log('Résultat du script Python:', result);
-                alert('Le script Python a été exécuté avec succès !');
-            })
-            .catch(error => {
-                console.error('Erreur lors de l\'appel du script Python:', error);
-                alert('Erreur lors de l\'appel du script Python. Veuillez consulter la console pour plus de détails.');
-            });
-        }
-    </script>
+    <title>WebSocket Example</title>
+    <script src="listening_ai.js"></script>
 </head>
 <body>
-    <h1>Appel de Script Python</h1>
-    <p>Cliquez sur le bouton ci-dessous pour exécuter le script Python via Node.js :</p>
-    <button onclick="runPythonScript()">Exécuter le Script Python</button>
+    <button id="run-get-device-btn">Lister les ports d'entrée</button>
+    <div id="device-output"></div>
+
+    <form id="input-args">
+        <label for="device">Le numéro de port sur lequel est connecté le microphone ? </label>
+        <input type="text" id="device" name="input-device"><br>
+
+        <label for="checkbox">Lancer en mode stream ?</label>
+        <input type="checkbox" id="checkbox" name="stream-mode"><br>
+
+        <label for="file_input"> Audio clip sinon :</label>
+        <input type="file" id="file" name="file"><br>
+
+        <button type="submit">Soumettre</button>
+    </form>
+
+    <div id="output_class"></div>
 </body>
 </html>
