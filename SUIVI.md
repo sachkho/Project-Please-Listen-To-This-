@@ -54,13 +54,14 @@ Developpement de la gestion de fichier avec le server node
 - 20/06 :\
 Rendu poster pour forum des projets
 
--23/06
-Sacha : Developpement du CSS et feedback sur le InDesign envoyé par Lauren, architecture de l'interface chef d'orchestre
+-23/06 :\
+Sacha : Developpement du CSS et feedback sur le InDesign envoyé par Lauren, architecture de l'interface chef d'orchestre \
 Noa : Developpement de la partie synchronisation --> message entre server et client pour le téléchargement des fichiers
 
 
 - 24/06:\
-Tania : fix classifier, Configuration microphone & requirements.txt + première approche sur l'intégration de l'ia sur l'interface
+Tania : fix classifier, Configuration microphone & requirements.txt + première approche sur l'intégration de l'ia sur l'interface \
+
 Noa et Sacha : travail sur le TimeStamp pour la gestion d'erreur --> actualiser le site web pour retrouver l'enregistrement au bon moment + travail CSS sur la présentation globale du site web.
 
 
