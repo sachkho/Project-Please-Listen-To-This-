@@ -1,0 +1,11 @@
+media
+mediapipe
+numpy
+PyAudio
+scipy
+sounddevice
+tensorflow
+tensorflow_hub
+tensorrt
+pydub
+PyQt5

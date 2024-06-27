@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Example</title>
+    <script src="listening_ai.js"></script>
+</head>
+<body>
+    <button id="run-get-device-btn">Lister les ports d'entrée</button>
+    <div id="device-output"></div>
+
+    <form id="input-args">
+        <label for="device">Le numéro de port sur lequel est connecté le microphone ? </label>
+        <input type="text" id="device" name="input-device"><br>
+
+        <label for="checkbox">Lancer en mode stream ?</label>
+        <input type="checkbox" id="checkbox" name="stream-mode"><br>
+
+        <label for="file_input"> Audio clip sinon :</label>
+        <input type="file" id="file" name="file"><br>
+
+        <button type="submit">Soumettre</button>
+    </form>
+
+    <div id="output_class"></div>
+</body>
+</html>

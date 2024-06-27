@@ -36,10 +36,10 @@ Point sur le projet avec les encadrants - discussion sur les approches liées à
 - 13/05:\
 Point mi-période et discussion sur les prochains fonctionnalités ux du projet
 
-- 28/05:\ 
+- 28/05:\
 Tania : Réunion avec Rizwan et Lauren pour démo de premier prototype du listening Machine avec MediaPipe
 
-- 29/05:\ 
+- 29/05:\
 Audit général mi-parcours
 
 - 31:05:\
@@ -47,3 +47,22 @@ Réunion de présentation de premier prototype test\
 Discussion sur les prochains échanges externes liés au projet.\
 Rendu du rapport sur les impacts sociaux/environnementaux/légaux/artistique du projet
 
+- 12/06 :\
+Réunion avant sprint
+Developpement de la gestion de fichier avec le server node
+
+- 20/06 :\
+Rendu poster pour forum des projets
+
+-23/06 :\
+Sacha : Developpement du CSS et feedback sur le InDesign envoyé par Lauren, architecture de l'interface chef d'orchestre \
+Noa : Developpement de la partie synchronisation --> message entre server et client pour le téléchargement des fichiers
+
+
+- 24/06:\
+Tania : fix classifier, Configuration microphone & requirements.txt + première approche sur l'intégration de l'ia sur l'interface \
+Noa et Sacha : travail sur le TimeStamp pour la gestion d'erreur --> actualiser le site web pour retrouver l'enregistrement au bon moment + travail CSS sur la présentation globale du site web.
+
+- 25/05:\
+Interview sur le projet avec les respos comm de Télécom\
+Tania : Rajout de précision sur l'implémentation de la classification 

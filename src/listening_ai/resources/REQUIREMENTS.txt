@@ -1,3 +1,0 @@
-# pip install -q sounddevice==0.4.4
-# pip install -q mediapipe
-# tensorflow pyaudio numpy
