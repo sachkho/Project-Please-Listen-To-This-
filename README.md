@@ -21,13 +21,11 @@ Pour les dépendances liées au Listening Machine, il est nécessaire de s'assur
 2. Pour configurer toutes les dépendances liées à cette partie du projet
 `pip install -r src/listening_ai/requirements.txt`
 
-
 ### Pour lancer les tests
-1. Classification à partir d'un clip audio\
-`python3 src/listening_ai/code/py_solutions/main.py [chemin_vers_le_fichier_audio]`
+Lancer la commande suivante sur votre terminal:\
+`python3 src/listening_ai/code/py_solutions/app_test.py`\
 
-2. Classification sur un stream audio\
-`python3 src/listening_ai/code/py_solutions/main.py `
+Vous pourrez vous laisser guider par l'application.  
 
 ## A propos de l'artiste 
 Retrouvez la biographie de l'artiste ainsi que ses précédents projets et ceux en cours sur son [site web](http://www.laurentortil.com/).
