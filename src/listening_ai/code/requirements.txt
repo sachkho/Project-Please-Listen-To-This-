@@ -8,3 +8,4 @@ tensorflow
 tensorflow_hub
 tensorrt
 pydub
+PyQt5

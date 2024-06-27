@@ -40,12 +40,15 @@ def output_class(classification_result_list, segment_duration_ms, start_time_ms=
     :param start_time_ms: The start time of the audio data in milliseconds
     :type start_time_ms: int
     """
+    
     for idx, classification_result in enumerate(classification_result_list):   
         top_category = classification_result.classifications[0].categories[0] # Get the top category
         class_name = top_category.category_name # Get the class name
         score = top_category.score # Get the score
         timestamp = start_time_ms + idx * segment_duration_ms
         take_action(class_name, score, timestamp) # Take action based on the class name and score
+
+
 
 def take_action(class_name, score, timestamp):
     """Take action based on the class name and score.

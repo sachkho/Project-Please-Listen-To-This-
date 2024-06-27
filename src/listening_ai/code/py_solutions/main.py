@@ -16,7 +16,7 @@ import time
 from scipy.io import wavfile
 import warnings
 warnings.filterwarnings("ignore")
-from audio_process import *
+from audio_processing import *
 
 import json
 import sys
@@ -27,8 +27,7 @@ from mediapipe.tasks.python import audio
 # Customize and associate model for Classifier
 base_options = python.BaseOptions(model_asset_path='src/listening_ai/resources/classifier.tflite')
 options = audio.AudioClassifierOptions(base_options = base_options,
-                                        max_results = 1,
-                                        category_allowlist = ["Speech", "Mechanisms", "Silence", "Animal"]) # to customize the model
+                                        max_results = 1) # to customize the model
 
 
 def launchListeningMachine(stream_mode, input_device_id, audio_data = None):
@@ -85,7 +84,3 @@ def launchListeningMachineFromWeb () :
         print(f"Erreur de décodage du JSON : {e}")
         sys.exit(1)
         
-    
-
-if __name__ == "__main__":
-    launchListeningMachineFromWeb ()
