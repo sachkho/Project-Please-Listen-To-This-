@@ -10,6 +10,18 @@ class ClassificationThread(QThread):
     result_signal = pyqtSignal(str, float, float)
 
     def __init__(self, stream_mode, input_device_id, audio_data, class_distribution_graph):
+        """
+        Thread for performing audio classification.
+        
+        :param stream_mode: True if streaming mode, False if file mode.
+        :type stream_mode: bool
+        :param input_device_id: ID of the input device for stream mode.
+        :type input_device_id: int or None
+        :param audio_data: Path to the audio file for file mode.
+        :type audio_data: str or None
+        :param class_distribution_graph: Instance of ClassDistributionGraph to track class counts.
+        :type class_distribution_graph: ClassDistributionGraph
+        """
         super().__init__()
         self.stream_mode = stream_mode
         self.input_device_id = input_device_id
@@ -18,27 +30,52 @@ class ClassificationThread(QThread):
         self.classification_results = []
 
     def run(self):
+        """Runs the audio classification process based on mode."""
         launchListeningMachine(self.stream_mode, self.input_device_id, self.audio_data, self.emit_result)
 
     def emit_result(self, class_name, score, timestamp):
+        """
+        Emits the classification result through result_signal.
+        
+        :param class_name: Name of the detected class.
+        :type class_name: str
+        :param score: Confidence score of the classification.
+        :type score: float
+        :param timestamp: Timestamp of when the classification occurred.
+        :type timestamp: float
+        """
         self.classification_results.append((class_name, score, timestamp))
         self.result_signal.emit(class_name, score, timestamp)
         self.class_distribution_graph.add_classification(class_name)
 
     def get_classification_results(self):
+        """
+        Returns the list of classification results.
+        
+        :return: List of tuples (class_name, score, timestamp).
+        :rtype: list
+        """
         return self.classification_results
 
 class ClassDistributionGraph:
     def __init__(self):
+        """Initialize the class distribution graph."""
         self.class_counts = {}
 
     def add_classification(self, class_name):
+        """
+        Adds a classification to the graph, incrementing the count for the given class.
+        
+        :param class_name: Name of the detected class.
+        :type class_name: str
+        """
         if class_name in self.class_counts:
             self.class_counts[class_name] += 1
         else:
             self.class_counts[class_name] = 1
 
     def generate_and_display_graph(self):
+        """Generates and displays the bar graph of class distribution."""
         plt.figure(figsize=(10, 6))
         plt.bar(self.class_counts.keys(), self.class_counts.values(), color='skyblue')
         plt.xlabel('Class Name')
@@ -50,6 +87,7 @@ class ClassDistributionGraph:
 
 class AudioApp(QWidget):
     def __init__(self):
+        """Initialize the main application window."""
         super().__init__()
         
         self.stream_mode = None
@@ -61,6 +99,7 @@ class AudioApp(QWidget):
         self.initUI()
     
     def initUI(self):
+        """Initialize the user interface."""
         layout = QVBoxLayout()
         
         self.mode_label = QLabel("Select Mode:", self)
@@ -103,6 +142,7 @@ class AudioApp(QWidget):
     
     @pyqtSlot()
     def select_mode(self):
+        """Handles mode selection (Stream Mode or File Mode)."""
         if self.stream_mode_radio.isChecked():
             self.stream_mode = True
             self.device_button.setEnabled(True)
@@ -114,6 +154,7 @@ class AudioApp(QWidget):
     
     @pyqtSlot()
     def select_input_device(self):
+        """Opens a dialog to select the input device for streaming mode."""
         devices = list_input_devices()
         device_list = "\n".join([f"ID: {d[0]}, Name: {d[1]}" for d in devices])
         device_id, ok = QInputDialog.getInt(self, "Select Input Device", f"Available devices:\n{device_list}\nEnter device ID:")
@@ -122,6 +163,7 @@ class AudioApp(QWidget):
     
     @pyqtSlot()
     def select_audio_file(self):
+        """Opens a dialog to select an audio file for file mode."""
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.wav);;All Files (*)", options=options)
         if file_path:
@@ -129,6 +171,7 @@ class AudioApp(QWidget):
     
     @pyqtSlot()
     def start_classification(self):
+        """Starts the classification process based on selected mode and input."""
         if self.stream_mode and self.input_device_id is None:
             QMessageBox.critical(self, "Error", "Please select an input device.")
         elif not self.stream_mode and self.audio_data is None:
@@ -142,6 +185,7 @@ class AudioApp(QWidget):
     
     @pyqtSlot()
     def stop_classification(self):
+        """Stops the classification process and displays the class distribution graph."""
         if self.classification_thread:
             self.classification_thread.terminate()  # Terminates the thread
             self.start_button.setEnabled(True)
@@ -150,6 +194,16 @@ class AudioApp(QWidget):
 
     @pyqtSlot(str, float, float)
     def display_results(self, class_name, score, timestamp):
+        """
+        Displays the classification results in the results text area.
+        
+        :param class_name: Name of the detected class.
+        :type class_name: str
+        :param score: Confidence score of the classification.
+        :type score: float
+        :param timestamp: Timestamp of when the classification occurred.
+        :type timestamp: float
+        """
         result = f"Timestamp: {timestamp / 1000:.2f}s\nClass: {class_name}, Score: {score:.2f}\n"
         self.results_text.append(result)
 
