@@ -1,42 +1,20 @@
-import wave
 import numpy as np
-from pydub import AudioSegment
 
-def read_wave_file(filename):
-    """Read a wave file and return the frame rate and data as a numpy array."""
-    with wave.open(filename, 'rb') as wf:
-        frame_rate = wf.getframerate()
-        n_frames = wf.getnframes()
-        n_channels = wf.getnchannels()
-        data = wf.readframes(n_frames)
-        audio_data = np.frombuffer(data, dtype=np.int16)
-        if n_channels == 2:
-            audio_data = audio_data.reshape(-1, 2)
-        return frame_rate, audio_data
-
-def write_wave_file(filename, frame_rate, audio_data):
-    """Write a numpy array to a wave file."""
-    n_channels = 1 if audio_data.ndim == 1 else audio_data.shape[1]
-    with wave.open(filename, 'wb') as wf:
-        wf.setnchannels(n_channels)
-        wf.setsampwidth(2)
-        wf.setframerate(frame_rate)
-        wf.writeframes(audio_data.tobytes())
-
-def normalize_audio(input_file, output_file, intensity_threshold):
-    """Normalize an audio file by keeping only high-intensity sounds."""
-    frame_rate, audio_data = read_wave_file(input_file)
-
-    # Calculate the intensity of the audio signal
-    intensity = np.abs(audio_data)
+def normalize_audio(audio_clip, target_peak=-1.0):
+    """Normalize the audio clip to the target peak level.
+    :param audio_clip: The audio clip to normalize
+    :type audio_clip: np.array
+    :param target_peak: The target peak level in dBFS
+    :type target_peak: float
+    :return: The normalized audio clip
+    :type: np.array"""
     
-    # Identify frames above the intensity threshold
-    if audio_data.ndim == 2:
-        intensity = np.max(intensity, axis=1)
-    high_intensity_frames = intensity > intensity_threshold
+    target_peak_linear = 10 ** (target_peak / 20.0) # Convert target peak from dBFS to a linear scale
 
-    # Extract high-intensity audio segments
-    normalized_audio = audio_data[high_intensity_frames]
-
-    # Write the resulting audio to a new file
-    write_wave_file(output_file, frame_rate, normalized_audio)
+    current_peak = np.max(np.abs(audio_clip)) # Find the current peak value in the audio clip
+    
+    normalization_factor = target_peak_linear / current_peak # Calculate the normalization factor
+    
+    normalized_audio_clip = audio_clip * normalization_factor # Apply the normalization factor to the audio clip
+    
+    return normalized_audio_clip
