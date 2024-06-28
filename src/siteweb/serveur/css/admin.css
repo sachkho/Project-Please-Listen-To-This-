@@ -1,0 +1,133 @@
+h2 {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 1.5em; /* Taille de police réduite */
+    color: #86dfff;
+    text-align: center;
+    margin-top: 5px; /* Marge réduite */
+}
+
+#clients_list, #audios_list {
+    font-family: 'Montserrat';
+    text-align: center;
+}
+
+#clients_list ul, #audios_list li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    gap: 10px; /* Espace entre les éléments réduit */
+}
+
+#clients_list li, #audios_list li {
+    margin-bottom: 10px; /* Marge inférieure réduite */
+    font-weight: bold;
+}
+
+#addButton, #suprButton, .button-container button, #send {
+    background-color: white;
+    color: #86dfff;
+    border: 2px solid #86dfff; /* Bordure légèrement réduite */
+    border-radius: 5px; /* Bordures plus subtiles */
+    padding: 5px 15px; /* Padding ajusté */
+    font-size: 0.8em; /* Taille de police réduite */
+    cursor: pointer;
+    margin: 5px; /* Marges uniformisées et réduites */
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+#addButton:hover, #suprButton:hover, .button-container button:hover, #send:hover {
+    background-color: #86dfff;
+    color: white;
+    border-color: white;
+    transform: scale(1.02); /* Effet de survol subtil */
+}
+
+.audios-dropdown {
+    display: block; /* Adapté pour les petits écrans */
+    padding: 5px;
+    border: 3px solid #86dfff; /* Bordure ajustée */
+    width: auto; /* Largeur automatique pour s'adapter au contenu */
+    max-width: 100%; /* Utilisation maximale de l'espace disponible */
+    border-radius: 15px; /* Bordures arrondies ajustées */
+    align-items: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    background-color: transparent;
+    margin: 0 auto;
+    overflow-x: hidden; /* Pas de défilement horizontal */
+}
+
+.audios-dropdown > * > * {
+    font-family: 'Montserrat';
+    border: 2px solid #86dfff; /* Bordure ajustée */
+    border-radius: 15px; /* Bordures arrondies ajustées */
+    margin: 5px;
+    padding: 5px; /* Padding ajusté */
+    font-size: 0.7em; /* Taille de police réduite */
+    display: block;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.audios-dropdown > * > *:hover {
+    background-color: #b5ffb8;
+    transform: scale(1.02);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.audios-dropdown > * > *:active {
+    background-color: #42ff5b;
+    transform: scale(0.98);
+    transition: background-color 0.1s ease, transform 0.1s ease;
+}
+
+@keyframes Expand {
+    from {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+.audios-dropdown {
+    animation: Expand 0.5s ease-out;
+    transform-origin: top;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permet aux boutons de s'envelopper sur petits écrans */
+}
+
+#ajtAudio {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* Alignement vertical pour les petits écrans */
+}
+.commandes-container{
+    display: flex;
+    justify-content: flex-end; /* Aligner les éléments enfants à droite */
+    align-items: flex-start; /* Aligner les éléments enfants en haut */
+    width: 100%; /* Assurez-vous que le conteneur s'étend sur toute la largeur */
+    position: fixed; /* Fixe le conteneur par rapport à la fenêtre du navigateur */
+    top: 0; /* Positionne le conteneur tout en haut */
+    right: 0; /* Positionne le conteneur à droite */
+    z-index: 1000; /* S'assure que le conteneur reste au-dessus des autres éléments */
+}
+
+.passe_aux_commandes{
+    background-image: url('images/commandes.png');
+    border: none;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width : 200px;
+    height : 200px;
+    position: fixed; /* Ajout pour s'assurer que le bouton reste fixé */
+    
+}
+

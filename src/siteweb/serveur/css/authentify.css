@@ -1,0 +1,49 @@
+h2 {
+    display : flex;
+    justify-content : center;
+    color: #00A6E2;
+    font-size: 10em;
+    padding : 5px;
+    margin-bottom: 200px;
+    font-family: 'Open Sans', sans-serif;
+    border : 10px solid #00A6E2;
+    border-radius: 50px;
+}   
+
+.auth{
+    display : flex;
+    justify-content : center;
+    flex-direction : column;
+    align-items: center;
+}
+
+input {
+    display : flex;
+    justify-content : center;
+    width: 70%; /* Ajuste la largeur à celle de son conteneur */
+    padding: 20px; /* Ajoute de l'espace à l'intérieur de l'input */
+    font-size: 60px; /* Augmente la taille de la police */
+    margin: 20px 0; /* Ajoute de l'espace autour de l'input */
+    border: 5px solid #00a6e2; /* Optionnel: Définit la bordure */
+    border-radius: 30px; /* Optionnel: Arrondit les coins */
+}
+
+.connect{
+    display : flex;
+    justify-content : center;
+    align-items: center;
+    width: 70%; /* Ajuste la largeur à celle de son conteneur */
+    padding: 20px; /* Ajoute de l'espace à l'intérieur de l'input */
+    font-size: 60px; /* Augmente la taille de la police */
+    margin: 20px 0; /* Ajoute de l'espace autour de l'input */
+    border: 5px solid #00a6e2; /* Optionnel: Définit la bordure */
+    border-radius: 30px; /* Optionnel: Arrondit les coins */
+    background-color: #00a6e2;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    transition : transform 0.5s ease;
+}
+
+button:active {
+    transform: scale(0.95);
+}

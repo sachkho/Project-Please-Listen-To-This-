@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+  <head>
+    <title>Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  </head>
+
+  <body>
+    <script src="../admin.js"></script>
+
+    <div>
+        <h2>Liste des performers</h2>
+        <div id="clients_list"></div>
+        <div id="menu" class="dropdown-content"></div>
+    </div>
+    <div class="commandes-container">
+      <button class="passe_aux_commandes" onclick="location.href='commandes.html';"></button>
+    </div>
+
+    
+    <div>
+      <h2>Liste des audios</h2>
+      <div id="audios_list"></div>
+    </div>
+
+    <div class="button-container">
+      <button class="play-button" id="play-button" onclick="playAudio()">Play</button>
+      <button class="stop-button" onclick="stopAudio()">Stop</button>
+      <button class="refresh-button" onclick="refresh()">Refresh</button>
+  </div>
+
+    <div>
+      <h2>Ajouter Audio</h2>
+      <div id="ajtAudio">
+        <input type="file" id="fileInput" accept=".mp3" multiple>
+        <button onclick="sendFile()" id="send">Envoyer le fichier</button>
+        <pre id="output"></pre>
+      </div>
+    </div>
+
+    
+  </body>
+
+</html>

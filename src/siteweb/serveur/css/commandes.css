@@ -1,0 +1,39 @@
+.button-container {
+    display: flex;
+    flex-direction: column; /* Alignement vertical */
+    justify-content: center;
+    align-items: center;
+    height: 200vh;
+    margin-top: 200px;
+}
+
+button {
+    background-color: transparent;
+    border : none;
+    margin: 5px;
+    padding: 20px;
+    cursor: pointer;
+    width: 1000px; /* Largeur augmentée */
+    height: 500px; /* Hauteur existante */
+    background-size: 80% ;
+    background-position : center;
+    background-repeat: no-repeat;
+    transition : transform 0.5s ease;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.play {
+    background-image: url('images/start.png');
+}
+.stop {
+    background-image: url('images/stop.png');
+}
+.on-air {
+    background-image: url('images/on\ air.png');
+}
+.interface{
+    background-image: url('images/interface.png');
+}

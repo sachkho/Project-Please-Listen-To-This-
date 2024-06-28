@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Language Selection</title>
+    <link rel="stylesheet" href="../css/language.css">
+</head>
+<body>
+    <div class="button-container">
+        <button type="button" id="fr" class="french" onclick="location.href='channel.html'"></button>
+        <button type="button" id="jap" class="japanese" onclick="location.href='channel.html'"></button>
+    </div>
+    
+    <script>
+        const fr = document.getElementById('fr');
+        const jap = document.getElementById('jap');
+
+        sessionStorage.clear();
+
+        fr.addEventListener('click', function() {
+            sessionStorage.setItem('lang', 'fr');
+        });
+
+        jap.addEventListener('click', function() {
+            sessionStorage.setItem('lang', 'jap');
+        });
+    </script>
+</body>
+</html>

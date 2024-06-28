@@ -1,0 +1,27 @@
+
+button {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px; /* Ajusté pour réduire la taille du bouton */
+    height: 700px; /* Ajusté pour réduire la taille du bouton */
+    margin: 0 auto;
+    background-image: url('images/Please\ listen\ to\ this.png');
+    background-size: 100%; /* Réduit la taille de l'image de fond */
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border : none;
+    background-position: center; /* Centre l'image dans le bouton */
+    padding: 10px 20px; /* Ajuste le padding si nécessaire */
+    cursor: pointer;
+    transition : transform 0.5s ease; /* Ajoute une transition pour l'animation */
+
+}
+
+button:active {
+    transform:translate(-50%, -50%) scale(0.95); /* Réduit la taille du bouton lorsqu'il est pressé */
+}

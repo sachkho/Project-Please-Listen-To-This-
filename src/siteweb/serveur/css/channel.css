@@ -1,0 +1,34 @@
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Les boutons seront empilés verticalement */
+    height : 200vh;
+}
+
+.one, .two, .three{
+    background-color : transparent;
+    border : none;
+    width: 850px; /* Largeur des boutons */
+    height: 300px; /* Hauteur des boutons */
+    background-size: contain; /* Assurez-vous que l'image couvre tout le bouton */
+    background-position : center;
+    margin: 10px; /* Espacement entre les boutons */
+    background-repeat : no-repeat;
+    transition : transform 0.5s ease;
+}
+.one {
+    background-image: url('images/group1.png');
+}
+
+.two {
+    background-image: url('images/group2.png');
+}
+
+.three {
+    background-image: url('images/group3.png'); 
+}
+
+.one:active, .two:active, .three:active {
+    transform: scale(0.95);
+}

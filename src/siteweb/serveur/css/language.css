@@ -1,0 +1,30 @@
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Les boutons seront empilés verticalement */
+    height : 200vh;
+}
+
+.french, .japanese {
+    background-color : transparent;
+    border : none;
+    width: 850px; /* Largeur des boutons */
+    height: 300px; /* Hauteur des boutons */
+    background-size: contain; /* Assurez-vous que l'image couvre tout le bouton */
+    background-position : center;
+    margin: 10px; /* Espacement entre les boutons */
+    background-repeat : no-repeat;
+    transition : transform 0.5s ease;
+}
+.french{
+    background-image: url('images/french.png');
+}
+
+.japanese {
+    background-image: url('images/japanese.png');
+}
+
+.french:active, .japanese:active {
+    transform: scale(0.95);
+}

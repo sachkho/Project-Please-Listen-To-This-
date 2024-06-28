@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/channel.css">
+</head>
+    <body>
+        <div class="button-container">
+        <button type="button" id="one" class="one" onclick="location.href='interface_client.html';"></button>
+        <button type="button" id="two" class="two" onclick="location.href='interface_client.html';"></button>
+        <button type="button" id="three" class="three" onclick="location.href='interface_client.html';"></button>
+        </div>
+
+
+        <script>
+            
+
+            const one = document.getElementById('one');
+            const two = document.getElementById('two');
+            const three = document.getElementById('three');
+
+            one.addEventListener('click', () => {
+                sessionStorage.setItem('channel', 1);
+            });
+            two.addEventListener('click', () => {
+                sessionStorage.setItem('channel', 2);
+            });
+            three.addEventListener('click', () => {
+                sessionStorage.setItem('channel', 3);
+            });
+
+        </script>
+    </body>
+    
+</html>
